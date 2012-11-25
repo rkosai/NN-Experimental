@@ -1,19 +1,16 @@
 struct Node;
 
-// List of nodes
 struct NodeList {
     struct Node *node;
     struct NodeList *next;
 };
 
-// Weights for each node
 struct NodeWeightList {
     struct Node *node;
     double weight;
     struct NodeWeightList *next;
 };
 
-// Input, output values
 struct ValueList {
     double value;
     struct ValueList *next;
@@ -21,7 +18,7 @@ struct ValueList {
 
 struct Node {
     int id;
-    struct NodeWeightList *intput_references;
+    struct NodeWeightList *input_references;
     struct NodeList *output_references;
     struct ValueList *input_values;
     double error;
@@ -32,3 +29,8 @@ struct Node {
 // Public methods
 struct Node* new_node(void);
 
+struct NodeList* new_nodelist(struct Node*);
+
+void nodelist_append(struct NodeList*, struct NodeList*);
+
+void _verify_allocation(void*, char*);
