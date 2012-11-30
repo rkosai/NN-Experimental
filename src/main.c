@@ -3,13 +3,14 @@
 
 int main() {
     // Generate the network
-    struct Network *network = new_network();
-    add_network_layer(network, 2);
-    add_network_layer(network, 4);
-    add_network_layer(network, 1);
+    struct Network *n = new_network();
+    add_network_layer(n, 2);
+    add_network_layer(n, 4);
+    add_network_layer(n, 1);
+
+    print_network(n);
     //solidify_network();
 
-    //print_network();
 
     // TBD: Train the network
 

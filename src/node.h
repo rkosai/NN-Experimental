@@ -31,6 +31,6 @@ struct Node* new_node(void);
 
 struct NodeList* new_nodelist(struct Node*);
 
-void nodelist_append(struct NodeList*, struct NodeList*);
-
 void _verify_allocation(void*, char*);
+
+void print_node(struct Node*);

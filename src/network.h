@@ -20,6 +20,8 @@ struct Network* new_network(void);
 
 void add_network_layer(struct Network *, int);
 
+void nodelist_append(struct NodeList*, struct NodeList*);
+
 void solidify_network(struct Network*);
 
 void print_network(struct Network*);

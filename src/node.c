@@ -34,21 +34,6 @@ struct NodeList* new_nodelist(struct Node* node)
 
 }
 
-void nodelist_append(struct NodeList* list, struct NodeList *new_node)
-{
-    // Add the node_layer to the list of existing layers
-    if (list == NULL) {
-        list = new_node;
-    }
-    else {
-        struct NodeList *l = list;
-        while (l->next != NULL) {
-            l = l->next;
-        }
-        l->next = new_node;
-    }
-}
-
 void _verify_allocation(void *a, char* source)
 {
     if (a == NULL) {
@@ -60,3 +45,7 @@ void _verify_allocation(void *a, char* source)
     }
 }
 
+void print_node(struct Node *n)
+{
+    printf("     - Node %d\n", n->id);
+}

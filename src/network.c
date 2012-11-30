@@ -31,6 +31,10 @@ void add_network_layer(struct Network *n, int node_count)
         sizeof(struct NodeLayer));
     _verify_allocation(layer, "NodeLayer");
 
+    // initialize layer
+    layer->nodes = NULL;
+    layer->next = NULL;
+
     // Add the node_layer to the list of existing layers
     if (n->layers == NULL) {
         n->layers = layer;
@@ -48,8 +52,21 @@ void add_network_layer(struct Network *n, int node_count)
     for (i = 0; i < node_count; i++) {
         struct Node *node = make_node(n);
         struct NodeList *nl = new_nodelist(node);
-        nodelist_append(layer->nodes, nl);
+        if (layer->nodes == NULL) {
+            layer->nodes = nl;
+        }
+        else {
+            nodelist_append(layer->nodes, nl);
+        }
     }
+}
+
+void nodelist_append(struct NodeList* list, struct NodeList *new_node)
+{
+    while (list->next != NULL) {
+        list = list->next;
+    }
+    list->next = new_node;
 }
 
 struct Node* make_node(struct Network *n)
@@ -58,5 +75,27 @@ struct Node* make_node(struct Network *n)
     node->id = n->next_node_id;
     n->next_node_id++;
     return node;
+}
+
+
+void print_network(struct Network *n)
+{
+    struct NodeLayer *current_layer = (struct NodeLayer*) n->layers;
+    int i = 0;
+    while (current_layer != NULL) {
+        printf ("LAYER %d\n", i);
+
+        // For each layer, print each node
+        struct NodeList *current_list = current_layer->nodes;
+        while (current_list != NULL) {
+            struct Node* node = current_list->node;
+            print_node(node);
+            current_list = current_list->next;
+        }
+
+        // Increment to next layer
+        i++;
+        current_layer = current_layer->next;
+    }
 }
 
