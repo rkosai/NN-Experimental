@@ -2,13 +2,10 @@
 #include <stdlib.h>
 
 #include "network.h"
+#include "node.c"
 
 #define DEBUG 1
 #define MEMORY_DEBUG 1
-
-//forward declarations from node.h
-struct NodeList* new_nodelist(struct Node*);
-void nodelist_append(struct NodeList*, struct NodeList*);
 
 struct Network* new_network(void)
 {
@@ -77,7 +74,6 @@ struct Node* make_node(struct Network *n)
     return node;
 }
 
-
 void print_network(struct Network *n)
 {
     struct NodeLayer *current_layer = (struct NodeLayer*) n->layers;
@@ -97,5 +93,12 @@ void print_network(struct Network *n)
         i++;
         current_layer = current_layer->next;
     }
+}
+
+void solidify_network(struct Network *n)
+{
+    // connect each layer to the next layer
+
+    // connect up the inputs
 }
 

@@ -34,3 +34,8 @@ struct NodeList* new_nodelist(struct Node*);
 void _verify_allocation(void*, char*);
 
 void print_node(struct Node*);
+
+// Private methods
+void add_input_edge(struct Node*, struct Node*, double);
+
+void add_output_edge(struct Node*, struct Node*);

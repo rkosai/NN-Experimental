@@ -1,4 +1,3 @@
-#include "node.c"
 #include "network.c"
 
 int main() {
@@ -8,8 +7,8 @@ int main() {
     add_network_layer(n, 4);
     add_network_layer(n, 1);
 
+    solidify_network(n);
     print_network(n);
-    //solidify_network();
 
 
     // TBD: Train the network
