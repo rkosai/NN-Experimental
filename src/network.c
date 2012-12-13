@@ -97,8 +97,36 @@ void print_network(struct Network *n)
 
 void solidify_network(struct Network *n)
 {
-    // connect each layer to the next layer
+    if (n->layers != NULL) {
+        // connect each layer to the next layer
+        struct NodeLayer *this_layer = n->layers;
+        while (this_layer->next != NULL) {
+            struct NodeLayer *next_layer = this_layer->next;
 
-    // connect up the inputs
+            // connect each node in this layer to each in next layer
+            struct NodeList *this_nodelist = this_layer->nodes;
+
+            while (this_nodelist != NULL) {
+                struct NodeList *next_nodelist = next_layer->nodes;
+                while (next_nodelist != NULL) {
+                    add_input_edge(
+                        next_nodelist->node,
+                        this_nodelist->node,
+                        0.5);
+
+                    add_output_edge(
+                        this_nodelist->node,
+                        next_nodelist->node);
+
+                    next_nodelist = next_nodelist->next;
+                }
+                this_nodelist = this_nodelist->next;
+            }
+
+            this_layer = this_layer->next;
+        }
+
+        // connect up the inputs
+    }
 }
 

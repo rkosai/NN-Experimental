@@ -47,7 +47,12 @@ void _verify_allocation(void *a, char* source)
 
 void print_node(struct Node *n)
 {
+    // Print the node id
     printf("     - Node %d\n", n->id);
+
+    // Print the output nodes and weights
+
+    // Print the input nodes, weights, and values
 }
 
 void add_input_edge(struct Node *node, struct Node *input_node, double weight)
