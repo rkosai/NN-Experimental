@@ -8,12 +8,8 @@ struct NodeList {
 struct NodeWeightList {
     struct Node *node;
     double weight;
-    struct NodeWeightList *next;
-};
-
-struct ValueList {
     double value;
-    struct ValueList *next;
+    struct NodeWeightList *next;
 };
 
 struct Node {

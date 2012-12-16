@@ -109,10 +109,11 @@ void solidify_network(struct Network *n)
             while (this_nodelist != NULL) {
                 struct NodeList *next_nodelist = next_layer->nodes;
                 while (next_nodelist != NULL) {
+                    double random = (rand() % 100000) / 100000.0;
                     add_input_edge(
                         next_nodelist->node,
                         this_nodelist->node,
-                        0.5);
+                        random);
 
                     add_output_edge(
                         this_nodelist->node,
@@ -127,6 +128,12 @@ void solidify_network(struct Network *n)
         }
 
         // connect up the inputs
+        struct NodeLayer *first_layer = n->layers;
+        struct NodeList *current_node = first_layer->nodes;
+        while (current_node != NULL) {
+            add_input_edge(current_node->node, NULL, 1);
+            current_node = current_node->next;
+        }
     }
 }
 

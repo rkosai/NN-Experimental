@@ -1,4 +1,9 @@
 // Network elements
+struct ValueList {
+    double value;
+    struct ValueList *next;
+};
+
 struct TrainingDataList {
     struct ValueList *inputs;
     struct ValueList *outputs;

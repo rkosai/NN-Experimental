@@ -50,9 +50,36 @@ void print_node(struct Node *n)
     // Print the node id
     printf("     - Node %d\n", n->id);
 
-    // Print the output nodes and weights
-
     // Print the input nodes, weights, and values
+    struct NodeWeightList *input = n->input_references;
+    while (input != NULL) {
+        struct Node *in_node = input->node;
+        if (in_node != NULL) {
+            printf(
+                "        > Input Node: %d (weight %.3f) = %.3f\n",
+                in_node->id,
+                input->weight,
+                input->value);
+        }
+        else {
+            printf(
+                "        > Input Value: %.3f\n",
+                input->value);
+
+        }
+        input = input->next;
+    }
+
+    // Print the output nodes and weights
+    struct NodeList *output = n->output_references;
+    while (output != NULL) {
+        struct Node *out_node = output->node;
+        printf(
+            "        > Output Node: %d\n",
+            out_node->id);
+        output = output->next;
+    }
+
 }
 
 void add_input_edge(struct Node *node, struct Node *input_node, double weight)
@@ -63,6 +90,7 @@ void add_input_edge(struct Node *node, struct Node *input_node, double weight)
     _verify_allocation(nwl, "NodeWeightList");
     nwl->node = input_node;
     nwl->weight = weight;
+    nwl->value = -1.0;
     nwl->next = NULL;
 
     // append it to the list
