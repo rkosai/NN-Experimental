@@ -137,3 +137,23 @@ void solidify_network(struct Network *n)
     }
 }
 
+void add_training_data(struct Network *n, struct ValueList *input,
+                       struct ValueList *output)
+{
+    return;
+}
+
+void train_network(struct Network *n)
+{
+    return;
+}
+
+struct ValueList* execute_network(struct Network *n, struct ValueList *input)
+{
+    struct ValueList *node = (struct ValueList *) malloc(
+        sizeof(struct ValueList));
+    _verify_allocation(node, "ValueList");
+    return node;
+
+}
+

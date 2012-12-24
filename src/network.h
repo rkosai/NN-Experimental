@@ -31,6 +31,12 @@ void solidify_network(struct Network*);
 
 void print_network(struct Network*);
 
+void add_training_data(struct Network*, struct ValueList*, struct ValueList*);
+
+void train_network(struct Network*);
+
+struct ValueList* execute_network(struct Network*, struct ValueList*);
+
 // Private methods
 struct Node* make_node(struct Network*);
 
