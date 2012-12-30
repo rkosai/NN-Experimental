@@ -7,6 +7,7 @@ struct ValueList {
 struct TrainingDataList {
     struct ValueList *inputs;
     struct ValueList *outputs;
+    struct TrainingDataList *next;
 };
 
 struct NodeLayer {
@@ -32,6 +33,8 @@ void solidify_network(struct Network*);
 void print_network(struct Network*);
 
 void add_training_data(struct Network*, struct ValueList*, struct ValueList*);
+
+void print_training_data(struct Network*);
 
 void train_network(struct Network*);
 

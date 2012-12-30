@@ -18,6 +18,8 @@ int main() {
     add_training_data(n, make_input(1, 0), make_output(1));
     add_training_data(n, make_input(0, 1), make_output(1));
     add_training_data(n, make_input(0, 0), make_output(0));
+    print_training_data(n);
+
     train_network(n);
 
     // TBD: Test the network

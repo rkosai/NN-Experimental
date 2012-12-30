@@ -140,7 +140,54 @@ void solidify_network(struct Network *n)
 void add_training_data(struct Network *n, struct ValueList *input,
                        struct ValueList *output)
 {
-    return;
+    struct TrainingDataList *node = (struct TrainingDataList*) malloc(
+        sizeof(struct TrainingDataList));
+    _verify_allocation(node, "TrainingDataList");
+
+    node->inputs = input;
+    node->outputs = output;
+    node->next = NULL;
+
+    // Add this to the end of the list
+    if (n->training_data == NULL) {
+        n->training_data = node;
+    }
+    else {
+        struct TrainingDataList *current_node = n->training_data;
+        while (current_node->next != NULL) {
+            current_node = current_node->next;
+        }
+        current_node->next = node;
+    }
+}
+
+void print_training_data(struct Network *n)
+{
+    if (n->training_data) {
+        struct TrainingDataList *node = n->training_data;
+
+        while (node != NULL) {
+            struct ValueList *input = node->inputs;
+            struct ValueList *output = node->outputs;
+            printf("[ ");
+            // print inputs
+            while (input != NULL) {
+                printf("%.1f ", input->value);
+                input = input->next;
+            }
+            printf("][ ");
+            // print outputs
+            while (output != NULL) {
+                printf("%.1f ", output->value);
+                output = output->next;
+            }
+            printf("]\n");
+            node = node->next;
+        }
+    }
+    else {
+        printf("No training data.\n");
+    }
 }
 
 void train_network(struct Network *n)
