@@ -79,6 +79,10 @@ void print_node(struct Node *n)
             out_node->id);
         output = output->next;
     }
+}
+
+void execute_node(struct Node *node)
+{
 
 }
 

@@ -31,6 +31,8 @@ void _verify_allocation(void*, char*);
 
 void print_node(struct Node*);
 
+void execute_node(struct Node*);
+
 // Private methods
 void add_input_edge(struct Node*, struct Node*, double);
 

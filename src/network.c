@@ -202,5 +202,10 @@ struct ValueList* execute_network(struct Network *n, struct ValueList *input)
     _verify_allocation(node, "ValueList");
     return node;
 
+    // populate input values of first layer
+
+    // for each of the layers, execute each node and
+    // assign value to next layer
+
 }
 
