@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "node.h"
 
@@ -83,7 +84,21 @@ void print_node(struct Node *n)
 
 void execute_node(struct Node *node)
 {
+    float accumulator = 0;
+    struct NodeWeightList *nwl = node->input_references;
 
+    // gather up the data from all the input nodes
+    while (nwl != NULL) {
+        accumulator += nwl->weight * nwl->value;
+        nwl = nwl->next;
+    }
+
+    // reset the error
+    node->error = 0;
+
+    // calculate the output
+    float output = sigmoid(accumulator);
+    node->output = output;
 }
 
 void add_input_edge(struct Node *node, struct Node *input_node, double weight)
@@ -129,4 +144,10 @@ void add_output_edge(struct Node *node, struct Node *output_node)
         }
         l->next = nl;
     }
+}
+
+float sigmoid(float input)
+{
+    float output = 1 / (1 + exp(-10 * input));
+    return output;
 }

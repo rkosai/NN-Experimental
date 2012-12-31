@@ -16,7 +16,6 @@ struct Node {
     int id;
     struct NodeWeightList *input_references;
     struct NodeList *output_references;
-    struct ValueList *input_values;
     double error;
     double output;
     struct NodeWeightList *delta;
@@ -37,3 +36,5 @@ void execute_node(struct Node*);
 void add_input_edge(struct Node*, struct Node*, double);
 
 void add_output_edge(struct Node*, struct Node*);
+
+float sigmoid(float);

@@ -197,15 +197,35 @@ void train_network(struct Network *n)
 
 struct ValueList* execute_network(struct Network *n, struct ValueList *input)
 {
+
+    // populate input values of first layer
+    // assumes one input value on the front layer, per node
+    struct NodeLayer *layer = n->layers;
+    struct NodeList *nl = layer->nodes;
+    while (nl != NULL) {
+        struct Node *node = nl->node;
+        struct NodeWeightList *nwl = node->input_references;
+        nwl->value = input->value;
+        nl = nl->next;
+        input = input->next;
+    }
+
+    // for each of the layers, execute each node and
+    // assign value to next layer
+    while (layer != NULL) {
+
+        // TBD
+        layer = layer->next;
+
+        // On the last layer, store the value to results
+        if (layer == NULL) {
+
+        }
+    }
+
     struct ValueList *node = (struct ValueList *) malloc(
         sizeof(struct ValueList));
     _verify_allocation(node, "ValueList");
     return node;
-
-    // populate input values of first layer
-
-    // for each of the layers, execute each node and
-    // assign value to next layer
-
 }
 
