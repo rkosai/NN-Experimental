@@ -36,7 +36,7 @@ void add_training_data(struct Network*, struct ValueList*, struct ValueList*);
 
 void print_training_data(struct Network*);
 
-void train_network(struct Network*);
+void train_network(struct Network*, int);
 
 void train_instance(struct Network*, struct ValueList*, struct ValueList*);
 

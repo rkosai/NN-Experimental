@@ -190,14 +190,27 @@ void print_training_data(struct Network *n)
     }
 }
 
-void train_network(struct Network *n)
+void train_network(struct Network *n, int generations)
 {
-    return;
+    int i;
+    for (i = 0; i < generations; i++) {
+        // clear the deltas
+
+        // get the weight adjustments
+
+        // adjust the weights
+    }
 }
 
 void train_instance(struct Network* n, struct ValueList *i, struct ValueList *o)
 {
-    return;
+    // Forward propagate through the network
+
+    // Calculate and assign errors of the last layer
+
+    // Propagate error backwards
+
+    // Store the deltas
 }
 
 struct ValueList* execute_network(struct Network *n, struct ValueList *input)

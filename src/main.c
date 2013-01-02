@@ -20,7 +20,7 @@ int main() {
     add_training_data(n, make_input(0, 0), make_output(0));
     print_training_data(n);
 
-    train_network(n);
+    train_network(n, 1);
 
     // TBD: Test the network
     printf("1 xor 1 = %.3f\n", execute_network(n, make_input(1, 1))->value);
