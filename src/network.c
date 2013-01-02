@@ -195,6 +195,11 @@ void train_network(struct Network *n)
     return;
 }
 
+void train_instance(struct Network* n, struct ValueList *i, struct ValueList *o)
+{
+    return;
+}
+
 struct ValueList* execute_network(struct Network *n, struct ValueList *input)
 {
 
@@ -213,8 +218,29 @@ struct ValueList* execute_network(struct Network *n, struct ValueList *input)
     // for each of the layers, execute each node and
     // assign value to next layer
     while (layer != NULL) {
+        // for each node in the layer
+        nl = layer->nodes;
+        while (nl != NULL) {
+            // sets node->output to the right value
+            execute_node(nl->node);
 
-        // TBD
+            // propagate the result forward to each output node
+            struct NodeList *output_nl = nl->node->output_references;
+            while (output_nl != NULL) {
+                struct Node *target_node = output_nl->node;
+                struct NodeWeightList *input_wl = target_node->input_references;
+                while (input_wl != NULL) {
+                    // assign output weight to correct input
+                    if (input_wl->node == nl->node) {
+                        input_wl->value = nl->node->output;
+                    }
+                    input_wl = input_wl->next;
+                }
+                output_nl = output_nl->next;
+            }
+
+            nl = nl->next;
+        }
         layer = layer->next;
 
         // On the last layer, store the value to results

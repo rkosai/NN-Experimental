@@ -28,6 +28,7 @@ int main() {
     printf("0 xor 1 = %.3f\n", execute_network(n, make_input(0, 1))->value);
     printf("0 xor 0 = %.3f\n", execute_network(n, make_input(0, 0))->value);
 
+    print_network(n);
     return 0;
 }
 

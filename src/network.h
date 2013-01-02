@@ -38,6 +38,8 @@ void print_training_data(struct Network*);
 
 void train_network(struct Network*);
 
+void train_instance(struct Network*, struct ValueList*, struct ValueList*);
+
 struct ValueList* execute_network(struct Network*, struct ValueList*);
 
 // Private methods
