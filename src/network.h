@@ -11,12 +11,15 @@ struct TrainingDataList {
 };
 
 struct NodeLayer {
+    int layer_id;
     struct NodeList *nodes;
     struct NodeLayer *next;
+    struct NodeLayer *prev;
 };
 
 struct Network {
     struct NodeLayer *layers;
+    struct NodeLayer *last_layer;
     int next_node_id;
     struct TrainingDataList *training_data;
 };

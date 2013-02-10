@@ -15,6 +15,7 @@ struct Network* new_network(void)
 
     // Initialize object to be empty
     n->layers = NULL;
+    n->last_layer = NULL;
     n->next_node_id = 0;
     n->training_data = NULL;
 
@@ -31,18 +32,25 @@ void add_network_layer(struct Network *n, int node_count)
     // initialize layer
     layer->nodes = NULL;
     layer->next = NULL;
+    layer->prev = NULL;
 
     // Add the node_layer to the list of existing layers
     if (n->layers == NULL) {
+        layer->layer_id = 0;
         n->layers = layer;
     }
     else {
+        layer->layer_id = 1;
         struct NodeLayer *l = n->layers;
         while (l->next != NULL) {
+            layer->layer_id++;
             l = l->next;
         }
         l->next = layer;
+        layer->prev = l;
     }
+
+    n->last_layer = layer;
 
     // Now that we have the layer, add all the nodes
     int i;
@@ -77,9 +85,16 @@ struct Node* make_node(struct Network *n)
 void print_network(struct Network *n)
 {
     struct NodeLayer *current_layer = (struct NodeLayer*) n->layers;
-    int i = 0;
     while (current_layer != NULL) {
-        printf ("LAYER %d\n", i);
+        printf ("LAYER %d\n", current_layer->layer_id);
+
+        if (current_layer->prev != NULL) {
+            printf ("  - Previous Layer = %d\n", current_layer->prev->layer_id);
+        }
+
+        if (current_layer->next != NULL) {
+            printf ("  - Next layer = %d\n", current_layer->next->layer_id);
+        }
 
         // For each layer, print each node
         struct NodeList *current_list = current_layer->nodes;
@@ -90,7 +105,6 @@ void print_network(struct Network *n)
         }
 
         // Increment to next layer
-        i++;
         current_layer = current_layer->next;
     }
 }
@@ -228,6 +242,13 @@ struct ValueList* execute_network(struct Network *n, struct ValueList *input)
         input = input->next;
     }
 
+    // Create data structure for final output
+    struct ValueList *output_vl = (struct ValueList *) malloc(
+        sizeof(struct ValueList));
+    _verify_allocation(output_vl, "ValueList");
+    output_vl->value = 0;
+    output_vl->next = NULL;
+
     // for each of the layers, execute each node and
     // assign value to next layer
     while (layer != NULL) {
@@ -254,17 +275,29 @@ struct ValueList* execute_network(struct Network *n, struct ValueList *input)
 
             nl = nl->next;
         }
-        layer = layer->next;
 
         // On the last layer, store the value to results
-        if (layer == NULL) {
+        if (layer->next == NULL) {
+            nl = layer->nodes;
+            while (nl != NULL) {
+                output_vl->value = nl->node->output;
+                if (nl->next != NULL) {
+                    struct ValueList *next_vl = (struct ValueList *) malloc(
+                        sizeof(struct ValueList));
+                    _verify_allocation(next_vl, "ValueList");
+                    next_vl->value = 0;
+                    next_vl->next = NULL;
 
+                    output_vl->next = next_vl;
+                    output_vl = next_vl;
+                }
+                nl = nl->next;
+            }
         }
+
+        layer = layer->next;
     }
 
-    struct ValueList *node = (struct ValueList *) malloc(
-        sizeof(struct ValueList));
-    _verify_allocation(node, "ValueList");
-    return node;
+    return output_vl;
 }
 
